@@ -2,11 +2,13 @@
 
 namespace Tests\Feature;
 
-use App\Models\Shop\Brand;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Shop\Brand;
 use App\Models\Shop\Product;
 use Laravel\Passport\Passport;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -156,6 +158,27 @@ class ProductsTest extends TestCase
             'type' => $newProduct->type,
             'published_at' => $newProduct->published_at->format('Y-m-d H:i:s'),
         ]]);
+    }
+
+    /**
+     * can upload image to products.
+     *
+     * @test
+     * @group products
+     * @group now
+     */
+    public function can_upload_image_to_product()
+    {
+        Storage::fake('products');
+        $user = User::factory()->create();
+        $product = Product::factory()->create();
+        Passport::actingAs($user, ['manage-products']);
+        $response = $this->put('/api/products/'.$product->id.'/upload', [
+            'image' => UploadedFile::fake()->image($product->id.'.jpg')
+        ]);
+        $response->assertOk();
+        // Assert the file was stored...
+        $this->assertTrue(file_exists(storage_path("app/products/{$product->id}.jpg")));
     }
 
     

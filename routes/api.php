@@ -32,6 +32,7 @@ Route::middleware('scope:manage-products')->group(function() {
     Route::get('/products/{id}', [ProductsController::class, 'show'])->name('products.show');
     Route::post('/products', [ProductsController::class, 'store'])->name('products.store');
     Route::put('/products/{id}', [ProductsController::class, 'update'])->name('products.update');
+    Route::put('/products/{id}/upload', [ProductsController::class, 'uploadImage'])->name('products.update.image');
     Route::delete('/products/{id}', [ProductsController::class, 'destroy'])->name('products.destroy');
 });
 

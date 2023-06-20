@@ -13,32 +13,32 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 class BrandsController extends Controller
 {
     function index() : AnonymousResourceCollection {
-        $customers = QueryBuilder::for(Brand::class)->jsonPaginate();
-        return BrandResource::collection($customers);
+        $brands = QueryBuilder::for(Brand::class)->jsonPaginate();
+        return BrandResource::collection($brands);
     }
 
-    function show($customerId) : BrandResource {
-        $customer = QueryBuilder::for(Brand::class)->findOrFail($customerId);
-        return new BrandResource($customer);
+    function show($brandId) : BrandResource {
+        $brand = QueryBuilder::for(Brand::class)->findOrFail($brandId);
+        return new BrandResource($brand);
     }
 
     function store(BrandCreateRequest $request) : BrandResource {
-        $customer = QueryBuilder::for(Brand::class)->create($request->validated());
-        return new BrandResource($customer);
+        $brand = QueryBuilder::for(Brand::class)->create($request->validated());
+        return new BrandResource($brand);
     }
 
-    function update(BrandUpdateRequest $request, $customerId) : BrandResource {
-        $customer = QueryBuilder::for(Brand::class)->findOrFail($customerId);
-        $customer->fill($request->validated());
-        if ($customer->isDirty()) {
-            $customer->save();
+    function update(BrandUpdateRequest $request, $brandId) : BrandResource {
+        $brand = QueryBuilder::for(Brand::class)->findOrFail($brandId);
+        $brand->fill($request->validated());
+        if ($brand->isDirty()) {
+            $brand->save();
         }
-        return new BrandResource($customer);
+        return new BrandResource($brand);
     }
 
-    function destroy($customerId) {
-        $customer = QueryBuilder::for(Brand::class)->findOrFail($customerId);
-        $customer->delete();
+    function destroy($brandId) {
+        $brand = QueryBuilder::for(Brand::class)->findOrFail($brandId);
+        $brand->delete();
 
         return response(content: null, status: Response::HTTP_NO_CONTENT);
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Http\Resources\BrandResource;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
@@ -18,6 +19,7 @@ class ProductResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'image' => Storage::url($this->product_image),
             'brand' => new BrandResource($this->whenLoaded('brand')),
             'slug' => $this->slug,
             'sku' => $this->sku,

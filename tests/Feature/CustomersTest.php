@@ -38,7 +38,6 @@ class CustomersTest extends TestCase
      *
      * @test
      * @group customers
-     * @group now
      */
     public function can_search_customers()
     {
