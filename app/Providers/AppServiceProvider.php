@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Database\Eloquent\Model;
+use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        Passport::ignoreMigrations();
     }
 
     /**
@@ -27,8 +28,12 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::unguard();
 
+        //should not force https, instead use other methods for https example
+        //APP URL, ASSET URL, which will generate proper https urls
         if (app()->environment('production')) {
             URL::forceScheme('https');
         }
+
+        Passport::hashClientSecrets();
     }
 }

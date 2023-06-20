@@ -2,6 +2,7 @@
 
 namespace Database\Factories\Shop;
 
+use App\Models\Shop\Brand;
 use App\Models\Shop\Product;
 use Database\Seeders\DatabaseSeeder;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -19,6 +20,7 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $name = $this->faker->unique()->catchPhrase(),
+            'shop_brand_id' => fn () => Brand::factory()->create()->id,
             'slug' => Str::slug($name),
             'sku' => $this->faker->unique()->ean8(),
             'barcode' => $this->faker->ean13(),

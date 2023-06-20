@@ -25,7 +25,7 @@ class Customer extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'birthday' => 'date',
+        'birthday' => 'date:Y-m-d',
     ];
 
     public function addresses(): MorphToMany

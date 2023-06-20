@@ -3,18 +3,20 @@
 namespace App\Models\Shop;
 
 use App\Models\Comment;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
+    use SoftDeletes;
 
     /**
      * @var string
@@ -29,7 +31,7 @@ class Product extends Model implements HasMedia
         'is_visible' => 'boolean',
         'backorder' => 'boolean',
         'requires_shipping' => 'boolean',
-        'published_at' => 'date',
+        'published_at' => 'date:Y-m-d H:i:s',
     ];
 
     public function brand(): BelongsTo

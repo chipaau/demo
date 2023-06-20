@@ -31,7 +31,7 @@ return new class() extends Migration
             $table->enum('type', ['deliverable', 'downloadable'])->nullable();
             $table->boolean('backorder')->default(false);
             $table->boolean('requires_shipping')->default(false);
-            $table->date('published_at')->nullable();
+            $table->datetime('published_at')->nullable();
             $table->string('seo_title', 60)->nullable();
             $table->string('seo_description', 160)->nullable();
             $table->decimal('weight_value', 10, 2)->nullable()
@@ -55,6 +55,7 @@ return new class() extends Migration
                 ->unsigned();
             $table->string('volume_unit')->default('l');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
